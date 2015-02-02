@@ -27,6 +27,7 @@
 }
 
 - (void)commonInit {
+    self.allowsMultipleExpandedSections = YES;
     [self addGestureRecognizer:self.tapGestureRecognizer];
 }
 
@@ -62,6 +63,48 @@
     return [self.expandedSections[section] boolValue];
 }
 
+- (NSArray*)indexPathsForSection:(NSInteger)section {
+    NSMutableArray* indexPaths = [NSMutableArray array];
+    for (NSInteger i = 1, maxI = [self.myDataSource collectionView:self numberOfItemsInSection:section]; i < maxI; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:section]];
+    }
+    return [indexPaths copy];
+}
+
+- (NSArray*)expandedSectionIndexPaths {
+    NSMutableArray* sectionIndexPaths = [NSMutableArray array];
+    if (!self.allowsMultipleExpandedSections) {
+        for (NSInteger i = 0; i < self.numberOfSections; i++) {
+            if ([self isExpandedSection:i]) {
+                [sectionIndexPaths addObject:[NSIndexPath indexPathForItem:0 inSection:i]];
+            }
+        }
+    }
+    return [sectionIndexPaths copy];
+}
+
+- (NSArray*)collapseIndexPathsForSectionIndexPaths:(NSArray*)sectionIndexPaths {
+    NSArray* indexPaths = @[];
+    for (NSIndexPath* sectionIndexPath in sectionIndexPaths) {
+        indexPaths = [indexPaths arrayByAddingObjectsFromArray:[self indexPathsForSection:sectionIndexPath.section]];
+    }
+    return indexPaths;
+}
+
+- (void)updateExpandedSectionsForSectionIndexPaths:(NSArray*)sectionIndexPaths {
+    for (NSIndexPath* sectionIndexPath in sectionIndexPaths) {
+        self.expandedSections[sectionIndexPath.section] = @(NO);
+    }
+}
+
+- (void)didCollapseItemsForSectionIndexPaths:(NSArray*)sectionIndexPaths {
+    for (NSIndexPath* sectionIndexPath in sectionIndexPaths) {
+        if ([self.delegate respondsToSelector:@selector(collectionView:didCollapseItemAtIndexPath:)]) {
+            [self.delegate collectionView:self didCollapseItemAtIndexPath:sectionIndexPath];
+        }
+    }
+}
+
 - (void)handleTapGesture:(UITapGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGPoint point = [sender locationInView:self];
@@ -70,16 +113,16 @@
         if (tappedCellPath && (tappedCellPath.item == 0)) {
             NSInteger tappedSection = tappedCellPath.section;
             BOOL willOpen = ![self.expandedSections[tappedSection] boolValue];
-            NSMutableArray* indexPaths = [NSMutableArray array];
-            for (NSInteger i = 1, maxI = [self.myDataSource collectionView:self numberOfItemsInSection:tappedSection]; i < maxI; i++) {
-                [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:tappedSection]];
-            }
+            NSArray* indexPaths = [self indexPathsForSection:tappedSection];
+            NSArray* expandedSectionIndexPaths = willOpen ? [self expandedSectionIndexPaths] : @[];
             [self performBatchUpdates:^{
                 if (willOpen) {
+                    [self deleteItemsAtIndexPaths:[self collapseIndexPathsForSectionIndexPaths:expandedSectionIndexPaths]];
                     [self insertItemsAtIndexPaths:indexPaths];
                 } else {
                     [self deleteItemsAtIndexPaths:indexPaths];
                 }
+                [self updateExpandedSectionsForSectionIndexPaths:expandedSectionIndexPaths];
                 self.expandedSections[tappedSection] = @(willOpen);
             } completion:nil];
             
@@ -100,6 +143,7 @@
                     }
                 }
                 if ([self.delegate respondsToSelector:@selector(collectionView:didExpandItemAtIndexPath:)]) {
+                    [self didCollapseItemsForSectionIndexPaths:expandedSectionIndexPaths];
                     [self.delegate collectionView:self didExpandItemAtIndexPath:tappedCellPath];
                 }
             } else {

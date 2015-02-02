@@ -11,4 +11,6 @@
 
 @interface APLViewController : UICollectionViewController <APLExpandableCollectionViewDelegate, UICollectionViewDataSource>
 
+@property(nonatomic, retain) APLExpandableCollectionView *collectionView;
+
 @end

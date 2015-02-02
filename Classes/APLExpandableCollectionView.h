@@ -18,6 +18,9 @@
 /** The collection view’s delegate object. */
 @property (nonatomic, assign) id <APLExpandableCollectionViewDelegate> delegate;
 
+/** A Boolean value that determines whether users can expand more than one section, default is YES */
+@property (nonatomic, assign) BOOL allowsMultipleExpandedSections;
+
 /** Returns YES if the specified section is expanded. */
 - (BOOL)isExpandedSection:(NSInteger)section;
 

@@ -1,13 +1,14 @@
 Pod::Spec.new do |s|
 
   s.name         = "APLExpandableCollectionView"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "UICollectionView subclass with vertically expandable and collapsible sections"
 
   s.description  = <<-DESC
                    * animated expand and collapse animation
                    * scrolls expanded section to visible
                    * customizable flow layout for iPhone and iPad
+                   * supports single and multiple expanded sections
                    DESC
 
   s.homepage     = "https://github.com/apploft/APLExpandableCollectionView"

@@ -33,6 +33,7 @@
     layout.sectionInset = UIEdgeInsetsMake(sectionInsetTop, sectionInsetX, 0., sectionInsetX);
     
     self.collectionView.contentInset = UIEdgeInsetsMake(collectionViewInsetY, collectionViewInsetX, collectionViewInsetY + sectionInsetTop, collectionViewInsetX);
+    self.collectionView.allowsMultipleExpandedSections = YES;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -49,11 +50,11 @@
     APLCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"APLCollectionViewCell" forIndexPath:indexPath];
     
     if (indexPath.item == 0) {
-        cell.label.text = [NSString stringWithFormat:@"Section %i", indexPath.section + 1];
+        cell.label.text = [NSString stringWithFormat:@"Section %li", (long)indexPath.section + 1];
         cell.backgroundColor = [UIColor colorWithRed:58./255. green:165./255. blue:192./255. alpha:1.];
         cell.indentView.hidden = YES;
     } else {
-        cell.label.text = [NSString stringWithFormat:@"Item %i", indexPath.row];
+        cell.label.text = [NSString stringWithFormat:@"Item %li", (long)indexPath.row];
         cell.backgroundColor = [UIColor colorWithRed:58./255. green:165./255. blue:192./255. alpha:.5];
         cell.indentView.hidden = NO;
     }
