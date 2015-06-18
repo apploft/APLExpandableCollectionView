@@ -23,5 +23,6 @@
 
 /** Returns YES if the specified section is expanded. */
 - (BOOL)isExpandedSection:(NSInteger)section;
+- (void)addExpandedSection:(BOOL)isExpanded;
 
 @end

@@ -63,6 +63,12 @@
     return [self.expandedSections[section] boolValue];
 }
 
+- (void)addExpandedSection:(BOOL)isExpanded {
+    if (self.expandedSections) {
+        [self.expandedSections addObject:@NO];
+    }
+}
+
 - (NSArray*)indexPathsForSection:(NSInteger)section {
     NSMutableArray* indexPaths = [NSMutableArray array];
     for (NSInteger i = 1, maxI = [self.myDataSource collectionView:self numberOfItemsInSection:section]; i < maxI; i++) {
