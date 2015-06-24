@@ -64,8 +64,12 @@
 }
 
 - (void)addExpandedSection:(BOOL)isExpanded {
-    if (self.expandedSections) {
-        [self.expandedSections addObject:@NO];
+    [self.expandedSections addObject:@(isExpanded)];
+}
+
+- (void)insertExpandedSection:(BOOL)isExpanded atIndex:(NSUInteger)index {
+    if (index <= [self.expandedSections count]) {
+        [self.expandedSections insertObject:@(isExpanded) atIndex:index];
     }
 }
 

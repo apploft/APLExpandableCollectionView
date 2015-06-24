@@ -69,8 +69,11 @@
 }
 
 - (IBAction)addSection:(id)sender {
+    CGPoint point = [sender convertPoint:CGPointZero toView:self.collectionView];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:point];
+    
     [self.sections addObject:@"Section"];
-    [self.collectionView addExpandedSection:NO];
+    [self.collectionView insertExpandedSection:NO atIndex:indexPath.section + 1];
     [self.collectionView reloadData];
 }
 @end
