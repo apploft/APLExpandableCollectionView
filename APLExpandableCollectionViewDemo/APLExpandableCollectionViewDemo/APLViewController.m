@@ -17,6 +17,8 @@
 
 @implementation APLViewController
 
+@dynamic collectionView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

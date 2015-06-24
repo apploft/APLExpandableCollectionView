@@ -10,6 +10,8 @@
 
 @implementation APLExpandableCollectionView
 
+@dynamic delegate;
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
