@@ -13,8 +13,8 @@
 #pragma mark - updates
 
 -(void)prepareLayout {
-    [self updatePreviousLayoutAttributes];
     [super prepareLayout];
+    [self updatePreviousLayoutAttributes];
 }
 
 - (void)prepareForCollectionViewUpdates:(NSArray *)updateItems {

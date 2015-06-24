@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIView *indentView;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end

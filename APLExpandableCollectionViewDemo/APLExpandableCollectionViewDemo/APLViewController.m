@@ -11,12 +11,16 @@
 
 @interface APLViewController ()
 
+@property (strong, nonatomic) NSMutableArray *sections;
+- (IBAction)addSection:(id)sender;
 @end
 
 @implementation APLViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.sections = [NSMutableArray arrayWithObjects:@"Section", @"Section", nil];
     
     BOOL isiPad = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad;
     CGFloat sectionInsetX = isiPad ? 14. : 8.;
@@ -39,7 +43,7 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 7;
+    return self.sections.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -53,13 +57,20 @@
         cell.label.text = [NSString stringWithFormat:@"Section %li", (long)indexPath.section + 1];
         cell.backgroundColor = [UIColor colorWithRed:58./255. green:165./255. blue:192./255. alpha:1.];
         cell.indentView.hidden = YES;
+        cell.button.hidden = NO;
     } else {
         cell.label.text = [NSString stringWithFormat:@"Item %li", (long)indexPath.row];
         cell.backgroundColor = [UIColor colorWithRed:58./255. green:165./255. blue:192./255. alpha:.5];
         cell.indentView.hidden = NO;
+        cell.button.hidden = YES;
     }
     
     return cell;
 }
 
+- (IBAction)addSection:(id)sender {
+    [self.sections addObject:@"Section"];
+    [self.collectionView addExpandedSection:NO];
+    [self.collectionView reloadData];
+}
 @end
