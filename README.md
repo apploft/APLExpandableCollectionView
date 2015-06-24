@@ -7,6 +7,7 @@ UICollectionView subclass with vertically expandable and collapsible sections.
 * scrolls expanded section to visible
 * customizable flow layout for iPhone and iPad
 * supports single and multiple expanded sections
+* supports addition of sections
 
 ![iPad Screenshot](screenshot-ipad-landscape.png) ![iPhone Screenshot](screenshot-iphone.png)
 
@@ -26,3 +27,13 @@ If you are not interested in expandable cells but would like to use a UICollecti
 ### Collapsing all expanded sections before expanding the next section
 
 	self.collectionView.allowsMultipleExpandedSections = NO;
+	
+### Dynamically adding sections
+
+Adds a new section after the existing sections and displays it as collapsed:
+
+	[self.collectionView addExpandedSection:NO];
+	
+Adds a new section before the existing sections and displays it as expanded:
+
+	[self.collectionView insertExpandedSection:YES atIndex:0];
