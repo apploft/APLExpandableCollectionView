@@ -34,7 +34,7 @@
  */
 - (void)insertExpandedSection:(BOOL)isExpanded atIndex:(NSUInteger)index;
 
-/** Remove all expaneded section.
+/** Collapse all expaneded section.
  */
 - (void)collapseAllSections;
 @end
