@@ -1,13 +1,13 @@
 fastlane_version "1.66.0"
 
-desc "Release new version"
+desc "Release new pod version"
 lane :release do |options|
     skip_docs
     target_version = options[:version]
-    raise "The version is missed. Use `fastlane release version:{version_number}`.`" if target_version.nil?
+    raise "The version is missing. Use `fastlane release version:{version_number}`.`" if target_version.nil?
     
     path = options[:path] || Dir["../*.podspec"].first
-    raise "The path to podspec is missed. Place a podspec file in the root directory or use `fastlane release version:{version_number} path:{path_to_podspec}`.`" if path.nil?
+    raise "The podspec file path is missing. Place a podspec file in the root directory or use `fastlane release version:{version_number} path:{path_to_podspec}`.`" if path.nil?
     
     ensure_git_branch
     ensure_git_status_clean
