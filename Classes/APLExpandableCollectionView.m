@@ -75,6 +75,11 @@
     }
 }
 
+- (void)collapseAllSections {
+    [_expandedSections removeAllObjects];
+    _expandedSections = nil;
+}
+
 - (NSArray*)indexPathsForSection:(NSInteger)section {
     NSMutableArray* indexPaths = [NSMutableArray array];
     for (NSInteger i = 1, maxI = [self.myDataSource collectionView:self numberOfItemsInSection:section]; i < maxI; i++) {
