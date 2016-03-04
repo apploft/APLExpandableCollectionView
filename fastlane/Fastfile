@@ -6,7 +6,7 @@ lane :release do |options|
     target_version = options[:version]
     raise "The version is missing. Use `fastlane release version:{version_number}`.`" if target_version.nil?
     
-    path = options[:path] || Dir["../*.podspec"].first[3..0]
+    path = options[:path] || Dir["../*.podspec"].first[3..Dir["../*.podspec"].first.length]
     raise "The podspec file path is missing. Place a podspec file in the root directory or use `fastlane release version:{version_number} path:{path_to_podspec}`.`" if path.nil?
     
     ensure_git_branch
