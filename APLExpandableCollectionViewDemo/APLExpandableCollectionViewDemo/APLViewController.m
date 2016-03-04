@@ -78,4 +78,21 @@
     [self.collectionView insertExpandedSection:NO atIndex:indexPath.section + 1];
     [self.collectionView reloadData];
 }
+
+
+#pragma mark - APLExpandableCollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didCollapseItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", indexPath);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 50;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 100;
+}
+
+
 @end
