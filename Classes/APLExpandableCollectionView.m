@@ -179,7 +179,15 @@
         if (gestureRecognizer.state == UIGestureRecognizerStatePossible) {
             CGPoint point = [touch locationInView:self];
             NSIndexPath* tappedCellPath = [self indexPathForItemAtPoint:point];
-            return tappedCellPath && (tappedCellPath.item == 0);
+            if (tappedCellPath && tappedCellPath.item == 0) {
+                // Sections with only one item cannot be further expanded.
+                if ([self.myDataSource respondsToSelector:@selector(collectionView:numberOfItemsInSection:)]) {
+                    return [self.myDataSource collectionView:self numberOfItemsInSection:tappedCellPath.section] > 1;
+                } else {
+                    // Compatibility behaviour if myDataSource does not respond
+                    return YES;
+                }
+            }
         }
         return NO;
     }

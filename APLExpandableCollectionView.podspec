@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "APLExpandableCollectionView"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "UICollectionView subclass with vertically expandable and collapsible sections"
 
   s.description  = <<-DESC
